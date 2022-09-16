@@ -1,0 +1,13 @@
+.idea/
+*.iml
+
+.local/
+local/
+
+env/
+.env/
+venv/
+.venv/
+
+warehouse/*db/
+.ipynb_checkpoints/
