@@ -12,13 +12,13 @@ pyspark --help
 
 pyspark \
     --packages org.apache.iceberg:iceberg-spark-runtime-3.2_2.12:0.14.1 \
-    --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions \
-    --conf spark.sql.catalog.spark_catalog=org.apache.iceberg.spark.SparkSessionCatalog \
-    --conf spark.sql.catalog.spark_catalog.type=hive \
-    --conf spark.sql.catalog.local=org.apache.iceberg.spark.SparkCatalog \
-    --conf spark.sql.catalog.local.type=hadoop \
-    --conf spark.sql.catalog.local.warehouse=$PWD/warehouse \
-    --conf spark.sql.defaultCatalog=local
+    --conf "spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions" \
+    --conf "spark.sql.catalog.spark_catalog=org.apache.iceberg.spark.SparkSessionCatalog" \
+    --conf "spark.sql.catalog.spark_catalog.type=hive" \
+    --conf "spark.sql.catalog.local=org.apache.iceberg.spark.SparkCatalog" \
+    --conf "spark.sql.catalog.local.type=hadoop" \
+    --conf "spark.sql.catalog.local.warehouse=$PWD/warehouse" \
+    --conf "spark.sql.defaultCatalog=local"
 ```
 
 
@@ -33,7 +33,7 @@ Welcome to
       /_/
 
 Using Python version 3.10.6 (main, Aug 22 2022 20:41:54)
-Spark context Web UI available at http://localhost:4041
+Spark context Web UI available at http://localhost:4040
 Spark context available as 'sc' (master = local[*], app id = local-1663251309510).
 SparkSession available as 'spark'.
 >>>
@@ -199,6 +199,7 @@ REF:
 - https://iceberg.apache.org/spark-quickstart/
 - https://iceberg.apache.org/docs/latest/getting-started/
 
+
 ## Notes
 
 - Key takeaway notes 
@@ -207,7 +208,7 @@ REF:
     - Glue Catalog, DynamoDB or some RDBMS/RDS through JDBC Catalog
   - Tables are stored in where `warehouse` config flag point to... 
     - typically, object store like S3 
-    - hence, "Iceberg tables over Data Lake" or, _Iceberg Lake!_
+    - hence, "Iceberg tables over Data Lake" or, _Iceberg Data Lake!_
 
 ### Re-Spin
 
@@ -215,6 +216,7 @@ REF:
 rm -rf warehouse/*db
 ```
 
-### Alternative
+### Related
 
 - https://github.com/victorskl/deltalake-tute
+- https://github.com/victorskl/hudi-tute
