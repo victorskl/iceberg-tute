@@ -1,7 +1,7 @@
 # Apache Iceberg tute
 
 ```
-conda create -n iceberg-tute python=3.10
+conda create -n iceberg-tute python=3.12
 conda activate iceberg-tute
 
 pip install -r requirements.txt
@@ -11,13 +11,13 @@ which pyspark
 pyspark --help
 
 pyspark \
-    --packages org.apache.iceberg:iceberg-spark-runtime-3.2_2.12:0.14.1 \
+    --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.0 \
     --conf "spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions" \
     --conf "spark.sql.catalog.spark_catalog=org.apache.iceberg.spark.SparkSessionCatalog" \
     --conf "spark.sql.catalog.spark_catalog.type=hive" \
     --conf "spark.sql.catalog.local=org.apache.iceberg.spark.SparkCatalog" \
     --conf "spark.sql.catalog.local.type=hadoop" \
-    --conf "spark.sql.catalog.local.warehouse=$PWD/warehouse" \
+    --conf "spark.sql.catalog.local.warehouse=warehouse" \
     --conf "spark.sql.defaultCatalog=local"
 ```
 
@@ -29,12 +29,12 @@ Welcome to
       ____              __
      / __/__  ___ _____/ /__
     _\ \/ _ \/ _ `/ __/  '_/
-   /__ / .__/\_,_/_/ /_/\_\   version 3.3.0
+   /__ / .__/\_,_/_/ /_/\_\   version 3.5.1
       /_/
 
-Using Python version 3.10.6 (main, Aug 22 2022 20:41:54)
+Using Python version 3.12.4 (main, Jun 18 2024 10:07:17)
 Spark context Web UI available at http://localhost:4040
-Spark context available as 'sc' (master = local[*], app id = local-1663251309510).
+Spark context available as 'sc' (master = local[*], app id = local-1722671099470).
 SparkSession available as 'spark'.
 >>>
 ```
@@ -159,24 +159,26 @@ warehouse
 └── mydb
     └── mytbl
         ├── data
-        │   ├── 00000-0-8dd45eb1-0879-4fb2-8315-aeed4b35869e-00001.parquet
-        │   ├── 00000-12-1b79371f-a8b4-49b1-8ab2-c7c1975480b5-00001.parquet
-        │   ├── 00001-1-f47f7557-72a4-44b5-8f3a-568a3e63d5e3-00001.parquet
-        │   ├── 00001-13-b80ed809-da28-436b-83bc-84651636d1ac-00001.parquet
-        │   ├── 00002-14-5def7e30-93de-4448-b138-d881f6a98833-00001.parquet
-        │   ├── 00002-2-93709ad7-8a86-4377-85d8-34a306ebc541-00001.parquet
-        │   ├── 00003-15-d8ffaabd-c7ba-4bec-be1f-564d5dd9ed79-00001.parquet
-        │   └── 00003-3-4b240d2d-f5da-49a2-8226-1f391b43e737-00001.parquet
+        │   ├── 00002-2-3e21ec80-2f4c-44cd-a714-26023af64037-0-00001.parquet
+        │   ├── 00002-34-ab370d28-f091-498d-831c-67935dadabed-0-00001.parquet
+        │   ├── 00004-36-ab370d28-f091-498d-831c-67935dadabed-0-00001.parquet
+        │   ├── 00004-4-3e21ec80-2f4c-44cd-a714-26023af64037-0-00001.parquet
+        │   ├── 00007-39-ab370d28-f091-498d-831c-67935dadabed-0-00001.parquet
+        │   ├── 00007-7-3e21ec80-2f4c-44cd-a714-26023af64037-0-00001.parquet
+        │   ├── 00009-41-ab370d28-f091-498d-831c-67935dadabed-0-00001.parquet
+        │   ├── 00009-9-3e21ec80-2f4c-44cd-a714-26023af64037-0-00001.parquet
+        │   ├── 00011-11-3e21ec80-2f4c-44cd-a714-26023af64037-0-00001.parquet
+        │   └── 00011-43-ab370d28-f091-498d-831c-67935dadabed-0-00001.parquet
         └── metadata
-            ├── 4331caf9-e4f7-4808-b3eb-b990377668da-m0.avro
-            ├── 7a5fb14a-bc9c-4f3b-bb8f-52f48a0c6d55-m0.avro
-            ├── snap-5363510897792107688-1-4331caf9-e4f7-4808-b3eb-b990377668da.avro
-            ├── snap-9070834845967735565-1-7a5fb14a-bc9c-4f3b-bb8f-52f48a0c6d55.avro
+            ├── 4cd38843-d0cd-4ebd-ab4f-4f3d43581ff9-m0.avro
+            ├── dbae0478-c7b1-45ca-b5ae-fab559d313f9-m0.avro
+            ├── snap-2597526915951714765-1-4cd38843-d0cd-4ebd-ab4f-4f3d43581ff9.avro
+            ├── snap-2637002532996365912-1-dbae0478-c7b1-45ca-b5ae-fab559d313f9.avro
             ├── v1.metadata.json
             ├── v2.metadata.json
             └── version-hint.text
 
-4 directories, 15 files
+5 directories, 17 files
 ```
 
 Reading:
@@ -197,7 +199,6 @@ $ jupyter-lab
 REF:
 
 - https://iceberg.apache.org/spark-quickstart/
-- https://iceberg.apache.org/docs/latest/getting-started/
 
 
 ## Notes
@@ -215,6 +216,14 @@ REF:
 ```
 rm -rf warehouse/*db
 ```
+
+### AWS
+
+- https://iceberg.apache.org/docs/latest/aws/
+- [Using Iceberg tables with Athena](https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html)
+- [Using Iceberg table with EMR](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-iceberg.html)
+- [Build an Apache Iceberg data lake using Amazon Athena, Amazon EMR, and AWS Glue](https://aws.amazon.com/blogs/big-data/build-an-apache-iceberg-data-lake-using-amazon-athena-amazon-emr-and-aws-glue/)
+
 
 ### Related
 
